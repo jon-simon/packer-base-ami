@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: 552172703831.dkr.ecr.us-west-2.amazonaws.com/infra-tools:latest
+        environment:
+          AWS_DEFAULT_OUTPUT: json
+          AWS_DEFAULT_REGION: us-west-2
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Chef Version
+          command: chef -v
+      - run:
+          name: Woot
+          command: ls

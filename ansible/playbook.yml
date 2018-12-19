@@ -1,0 +1,23 @@
+---
+- name: Golden AMI Main Playbook
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - lineinfile:
+        path: /etc/login.defs
+        line: ENV_SUPATH  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        create: yes
+
+    - lineinfile:
+        path: /etc/login.defs
+        line: ENV_PATH  /usr/local/bin:/usr/bin:/bin
+        create: yes
+  roles:
+    - ansible-os-hardening
+    - ansible-ssh-hardening
+
+  vars:
+    os_ignore_users:
+      - "ec2-user"
+

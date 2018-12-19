@@ -1,0 +1,85 @@
+{
+  "variables": {
+    "Prefix": "jibakurei",
+    "Name": "amzn-linux-base",
+    "jenkins_job_name": "{{env `JOB_NAME`}}",
+    "jenkins_build_number": "{{env `BUILD_NUMBER`}}",
+    "destination_regions": "{{env `DEPLOY_REGIONS`}}",
+    "share_accounts": "{{env `SHARE_ACCOUNTS`}}",
+    "build_region": "{{env `BUILD_REGION`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "default",
+      "region": "us-west-2",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "amzn2-ami-hvm-2.0.*-x86_64-gp2",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "amazon"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "{{user `Prefix`}}-{{user `Name`}} {{isotime \"2006-01-02\"}}",
+      "ami_users": [
+        "{{user `share_accounts`}}"
+      ],
+      "ami_regions": "{{user `destination_regions`}}",
+      "tags": {
+        "Name": "{{user `Prefix`}}-{{user `Name`}}",
+        "BaseAMI": "{{ .SourceAMIName }}",
+        "CreatedOn": "{{isotime \"2006-01-02\"}}",
+        "CreatedBy": "Packer",
+        "JenkinsJobName": "{{user `jenkins_job_name`}}",
+        "JenkinsBuildNumber": "{{user `jenkins_build_number`}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo yum -y update",
+        "sudo yum -y upgrade"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "./scripts",
+      "destination": "/tmp"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo /tmp/scripts/packages.sh",
+        "sudo /tmp/scripts/ec2-additional-metrics.sh",
+        "sudo /tmp/scripts/inspector.sh",
+        "sudo /tmp/scripts/jumpcloud.sh",
+        "sudo /tmp/scripts/beats.sh"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "galaxy_file": "ansible/requirements.yml",
+      "playbook_file": "ansible/playbook.yml",
+      "extra_arguments": [
+        "-vv",
+        "--become"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo /tmp/scripts/secure_ssh.sh",
+        "sudo /tmp/scripts/compliance.sh",
+        "sudo /tmp/scripts/cleanup.sh"
+      ]
+    }
+  ]
+}
