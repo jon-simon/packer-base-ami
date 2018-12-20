@@ -1,11 +1,9 @@
 {
   "variables": {
-    "Prefix": "jibakurei",
-    "Name": "amzn-linux-base",
-    "jenkins_job_name": "{{env `JOB_NAME`}}",
-    "jenkins_build_number": "{{env `BUILD_NUMBER`}}",
-    "destination_regions": "{{env `DEPLOY_REGIONS`}}",
-    "share_accounts": "{{env `SHARE_ACCOUNTS`}}",
+    "Prefix": "{{env `AMI_PREFIX`}}",
+    "Name": "{{env `AMI_PREFIX`}}",
+    "circleci_job_name": "{{env `CIRCLE_JOB`}}",
+    "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
     "build_region": "{{env `BUILD_REGION`}}"
   },
   "builders": [
@@ -27,17 +25,14 @@
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
       "ami_name": "{{user `Prefix`}}-{{user `Name`}} {{isotime \"2006-01-02\"}}",
-      "ami_users": [
-        "{{user `share_accounts`}}"
-      ],
       "ami_regions": "{{user `destination_regions`}}",
       "tags": {
         "Name": "{{user `Prefix`}}-{{user `Name`}}",
         "BaseAMI": "{{ .SourceAMIName }}",
         "CreatedOn": "{{isotime \"2006-01-02\"}}",
         "CreatedBy": "Packer",
-        "JenkinsJobName": "{{user `jenkins_job_name`}}",
-        "JenkinsBuildNumber": "{{user `jenkins_build_number`}}"
+        "JenkinsJobName": "{{user `circleci_job_name`}}",
+        "JenkinsBuildNumber": "{{user `circleci_build_number`}}"
       }
     }
   ],
@@ -59,9 +54,7 @@
       "inline": [
         "sudo /tmp/scripts/packages.sh",
         "sudo /tmp/scripts/ec2-additional-metrics.sh",
-        "sudo /tmp/scripts/inspector.sh",
-        "sudo /tmp/scripts/jumpcloud.sh",
-        "sudo /tmp/scripts/beats.sh"
+        "sudo /tmp/scripts/inspector.sh"
       ]
     },
     {
