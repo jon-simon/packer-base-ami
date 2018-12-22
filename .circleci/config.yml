@@ -4,7 +4,7 @@ defaults: &defaults
   working_directory: ~/app
   environment:
     - AWS_REGION: us-west-2
-    - AMI_PREFIX: jibakurei
+    - AWS_PREFIX: jibakurei
     - AMI_NAME: amzn2-base
 
 version: 2
@@ -17,24 +17,25 @@ jobs:
           name: Packer Validate
           command: packer validate packer.json
       - persist_to_workspace:
-          root: packer_project
+          root: packer-project
           paths:
             - .
+
   packer_build:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /root/app/packer_project
+          at: /root/app/packer-project
       - run:
           name: Packer Build
-          command: packer build packer.json
+          command: cd /root/app/packer-project && packer build packer.json
 
 workflows:
   version: 2
   weekly:
     triggers:
     - schedule:
-        cron: "* * * * 0"
+        cron: "0 0 * * *"
         filters:
           branches:
             only:
