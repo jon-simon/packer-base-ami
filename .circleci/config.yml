@@ -42,6 +42,6 @@ workflows:
               - master
     jobs:
       - packer_validate
-      - packer_build:
+      - packer_build
           requires:
             - packer_validate
