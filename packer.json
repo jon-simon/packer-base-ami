@@ -4,7 +4,8 @@
     "Name": "{{env `AMI_NAME`}}",
     "circleci_job_name": "{{env `CIRCLE_JOB`}}",
     "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
-    "build_region": "{{env `AWS_REGION`}}"
+    "build_region": "{{env `AWS_REGION`}}",
+    "build_time_stamp": "{{isotime \"2006-01-02_15_04\"}}"
   },
   "builders": [
     {
@@ -24,12 +25,12 @@
       },
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
-      "ami_name": "{{user `Prefix`}}-{{user `Name`}} {{isotime \"2006-01-02\"}}",
+      "ami_name": "{{user `Prefix`}}-{{user `Name`}} {{user `build_time_stamp`}}",
       "ami_regions": "{{user `destination_regions`}}",
       "tags": {
         "Name": "{{user `Prefix`}}-{{user `Name`}}",
         "BaseAMI": "{{ .SourceAMIName }}",
-        "CreatedOn": "{{isotime \"2006-01-02\"}}",
+        "CreatedOn": "{{user `build_time_stamp`}}",
         "CreatedBy": "Packer",
         "CircleCIJobName": "{{user `circleci_job_name`}}",
         "CircleCIBuildNumber": "{{user `circleci_build_number`}}"
