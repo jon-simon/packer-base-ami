@@ -5,7 +5,7 @@
     "circleci_job_name": "{{env `CIRCLE_JOB`}}",
     "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
     "build_region": "{{env `AWS_REGION`}}",
-    "build_time_stamp": "{{isotime \"2006-01-02_15_04\"}}"
+    "build_time_stamp": "{{isotime | clean_ami_name}}"
   },
   "builders": [
     {
