@@ -32,7 +32,8 @@
         "CreatedOn": "{{isotime | clean_ami_name}}",
         "CreatedBy": "Packer",
         "CircleCIJobName": "{{user `circleci_job_name`}}",
-        "CircleCIBuildNumber": "{{user `circleci_build_number`}}"
+        "CircleCIBuildNumber": "{{user `circleci_build_number`}}",
+        "Platform": "{{ .SourcePlatform }}"
       }
     }
   ],
