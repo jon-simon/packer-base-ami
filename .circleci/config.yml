@@ -15,4 +15,4 @@ jobs:
           command: packer validate packer.json
       - run:
           name: Build
-          command: aws dynamodb list-tables
+          command: aws dynamodb list-tables --region $AWS_REGION
