@@ -32,18 +32,26 @@ jobs:
 
 workflows:
   version: 2
-  weekly:
-    triggers:
-    - schedule:
-        cron: "* 5 * * *"
-        filters:
-          branches:
-            only:
-              - master
+  commit:
     jobs:
       - packer_validate
       - packer_build
           requires:
             - packer_validate
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - packer_validate
+      - packer_build
+          requires:
+            - packer_validate
+
+
 
 
