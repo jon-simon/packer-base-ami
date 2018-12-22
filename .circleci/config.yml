@@ -9,7 +9,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  packer_validate:
+  validate:
     <<: *defaults
     steps:
       - checkout
@@ -17,7 +17,7 @@ jobs:
           name: Packer Validate
           command: packer validate packer.json
 
-  packer_build:
+  build:
     <<: *defaults
     steps:
       - checkout
@@ -30,8 +30,8 @@ workflows:
   version: 2
   commit:
     jobs:
-      - packer_validate
-      - packer_build:
+      - validate
+      - build:
           filters:
             branches:
               only:
@@ -45,7 +45,7 @@ workflows:
               only:
                 - master
     jobs:
-      - packer_build
+      - build
 
 
 
