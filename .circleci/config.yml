@@ -30,32 +30,20 @@ jobs:
           name: Packer Build
           command: cd /root/app/packer-project && packer build packer.json
 
-# workflows:
-#   version: 2
-#   weekly:
-#     triggers:
-#     - schedule:
-#         cron: "* 5 * * *"
-#         filters:
-#           branches:
-#             only:
-#               - master
-#     jobs:
-#       - packer_validate
-#       - packer_build
-#           requires:
-#             - packer_validate
-
 workflows:
   version: 2
-  validate_and_build:
+  weekly:
+    triggers:
+    - schedule:
+        cron: "* 5 * * *"
+        filters:
+          branches:
+            only:
+              - master
     jobs:
       - packer_validate
       - packer_build
           requires:
             - packer_validate
-          filters:
-            branches:
-              only:
-                - master
+
 
