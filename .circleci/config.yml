@@ -7,6 +7,7 @@ jobs:
           AWS_REGION: us-west-2
           AMI_PREFIX: jibakurei
           AMI_NAME: amzn2-base
+          AMI_PLATFORM: Amazon Linux
 
     steps:
       - checkout
