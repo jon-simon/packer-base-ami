@@ -31,8 +31,8 @@
         "BaseAMI": "{{ .SourceAMIName }}",
         "CreatedOn": "{{isotime \"2006-01-02\"}}",
         "CreatedBy": "Packer",
-        "JenkinsJobName": "{{user `circleci_job_name`}}",
-        "JenkinsBuildNumber": "{{user `circleci_build_number`}}"
+        "CircleCIJobName": "{{user `circleci_job_name`}}",
+        "CircleCIBuildNumber": "{{user `circleci_build_number`}}"
       }
     }
   ],
