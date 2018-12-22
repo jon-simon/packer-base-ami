@@ -4,16 +4,15 @@ jobs:
     docker:
       - image: 552172703831.dkr.ecr.us-west-2.amazonaws.com/infra-tools:latest
         environment:
-          AWS_DEFAULT_OUTPUT: json
-          AWS_DEFAULT_REGION: us-west-2
+          AWS_REGION: us-west-2
+          AMI_PREFIX: jibakurei
+          AMI_NAME: amzn2-base
+
     steps:
       - checkout
       - run:
-          name: Greeting
-          command: echo Hello, world.
+          name: Validate
+          command: packer validate packer.json
       - run:
-          name: Chef Version
-          command: chef -v
-      - run:
-          name: Woot
-          command: ls
+          name: Build
+          command: aws dynamodb list-tables

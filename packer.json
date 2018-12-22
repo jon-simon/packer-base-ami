@@ -4,7 +4,7 @@
     "Name": "{{env `AMI_PREFIX`}}",
     "circleci_job_name": "{{env `CIRCLE_JOB`}}",
     "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
-    "build_region": "{{env `BUILD_REGION`}}"
+    "build_region": "{{env `AWS_REGION`}}"
   },
   "builders": [
     {
