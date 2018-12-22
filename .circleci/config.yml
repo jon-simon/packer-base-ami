@@ -11,8 +11,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Validate
+          name: Packer Validate
           command: packer validate packer.json
       - run:
-          name: Build
-          command: aws dynamodb list-tables --region $AWS_REGION
+          name: Packer Build
+          command: packer build packer.json
