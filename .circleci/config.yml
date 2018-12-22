@@ -16,41 +16,37 @@ jobs:
       - run:
           name: Packer Validate
           command: packer validate packer.json
-      - persist_to_workspace:
-          root: packer-project
-          paths:
-            - .
 
   packer_build:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: /root/app/packer-project
+      - checkout
       - run:
           name: Packer Build
-          command: cd /root/app/packer-project && packer build packer.json
+          command: packer build packer.json
+
 
 workflows:
   version: 2
   commit:
     jobs:
       - packer_validate
-  #     - packer_build
-  #         requires:
-  #           - packer_validate
-  # nightly:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - packer_validate
-  #     - packer_build
-  #         requires:
-  #           - packer_validate
+      - packer_build:
+          filters:
+            branches:
+              only:
+                - master
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - packer_build
+
 
 
 
