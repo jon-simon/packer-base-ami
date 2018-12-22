@@ -1,7 +1,7 @@
 {
   "variables": {
     "Prefix": "{{env `AMI_PREFIX`}}",
-    "Name": "{{env `AMI_PREFIX`}}",
+    "Name": "{{env `AMI_NAME`}}",
     "circleci_job_name": "{{env `CIRCLE_JOB`}}",
     "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
     "build_region": "{{env `AWS_REGION`}}"
