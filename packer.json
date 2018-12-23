@@ -1,7 +1,6 @@
 {
   "variables": {
-    "prefix": "{{env `AMI_PREFIX`}}",
-    "name": "{{env `AMI_NAME`}}",
+    "ami_name": "{{env `AMI_PREFIX`}}-{{env `AMI_NAME`}}",
     "circleci_job_name": "{{env `CIRCLE_JOB`}}",
     "circleci_build_number": "{{env `CIRCLE_BUILD_NUM`}}",
     "build_region": "{{env `AWS_REGION`}}"
@@ -24,10 +23,10 @@
       },
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
-      "ami_name": "{{user `prefix`}}-{{user `name`}} {{isotime | clean_ami_name}}",
+      "ami_name": "{{user `ami_name`}} {{isotime | clean_ami_name}}",
       "ami_regions": "{{user `destination_regions`}}",
       "tags": {
-        "Name": "{{user `prefix`}}-{{user `name`}}",
+        "Name": "{{user `ami_name`}}",
         "BaseAMI": "{{ .SourceAMIName }}",
         "CreatedOn": "{{isotime | clean_ami_name}}",
         "CreatedBy": "Packer",
