@@ -4,7 +4,7 @@ defaults: &defaults
   working_directory: ~/app
   environment:
     - AWS_REGION: us-west-2
-    - AWS_PREFIX: jibakurei
+    - AMI_PREFIX: jibakurei
     - AMI_NAME: amzn2-base
 
 version: 2
