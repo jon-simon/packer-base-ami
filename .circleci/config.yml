@@ -1,3 +1,62 @@
+# defaults: &defaults
+#   docker:
+#     - image: 552172703831.dkr.ecr.us-west-2.amazonaws.com/infra-tools:latest
+#   working_directory: ~/app
+#   environment:
+#     - AWS_REGION: us-west-2
+#     - AWS_PREFIX: jibakurei
+#     - AMI_NAME: amzn2-base
+
+# version: 2
+# jobs:
+#   packer_validate:
+#     <<: *defaults
+#     steps:
+#       - checkout
+#       - run:
+#           name: Packer Validate
+#           command: packer validate packer.json
+
+#   packer_build:
+#     <<: *defaults
+#     steps:
+#       - checkout
+#       - run:
+#           name: ENVs
+#           command: env
+#       - run:
+#           name: Packer Build
+#           command: packer build packer.json
+
+# workflows:
+#   version: 2
+#   commit:
+#     jobs:
+#       - packer_validate
+#       - packer_build:
+#           requires:
+#             - packer_validate
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#   weekly:
+#     triggers:
+#       - schedule:
+#           cron: "5 8 * * 0"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#     jobs:
+#       - packer_build:
+#           filters:
+#             branches:
+#               only:
+#                 - master
+
+
+
 defaults: &defaults
   docker:
     - image: 552172703831.dkr.ecr.us-west-2.amazonaws.com/infra-tools:latest
@@ -40,27 +99,6 @@ workflows:
             branches:
               only:
                 - master
-  weekly:
-    triggers:
-      - schedule:
-          cron: "5 8 * * 0"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - packer_build:
-          filters:
-            branches:
-              only:
-                - master
-
-
-
-
-
-
-
 
 
 
