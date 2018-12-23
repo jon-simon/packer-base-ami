@@ -27,7 +27,7 @@
       "ami_name": "{{user `prefix`}}-{{user `name`}} {{isotime | clean_ami_name}}",
       "ami_regions": "{{user `destination_regions`}}",
       "tags": {
-        "Name": "{{user `Prefix`}}-{{user `name`}}",
+        "Name": "{{user `prefix`}}-{{user `name`}}",
         "BaseAMI": "{{ .SourceAMIName }}",
         "CreatedOn": "{{isotime | clean_ami_name}}",
         "CreatedBy": "Packer",
