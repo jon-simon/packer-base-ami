@@ -4,8 +4,6 @@
 ## build manually.  When using CI/CD tool, set ENV variables
 ## in the tool.
 
-export AWS_PROFILE=
-export AWS_REGION=
-export AMI_PREFIX=
-export AMI_NAME=
-export BUILD_REGION=
+
+for a in {'AWS_PROFILE','AWS_REGION','AMI_PREFIX','AMI_NAME','BUILD_REGION'}; do echo $a? && read res && export $a=$res; done
+
