@@ -78,7 +78,7 @@
   "post-processors": [
     {
       "type": "manifest",
-      "output": "manifest-{{isotime | clean_ami_name}}.json",
+      "output": "manifest-{{isotime}}.json",
       "strip_path": true
     }
   ]
