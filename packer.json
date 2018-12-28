@@ -85,7 +85,7 @@
       "type": "shell-local",
       "inline": [
         "aws s3 cp manifest.json s3://jibakurei-packer-manifests/base/manifest.json",
-        "aws lambda invoke --function-name prune-ami outputfile.txt"
+        "aws lambda invoke --function-name prune-ami outputfile.txt --region us-west-2"
       ]
     }
   ]
