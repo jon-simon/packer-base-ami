@@ -78,8 +78,14 @@
   "post-processors": [
     {
       "type": "manifest",
-      "output": "manifest-{{isotime}}.json",
+      "output": "manifest.json",
       "strip_path": true
+    },
+    {
+      "type": "shell-local",
+      "inline": [
+        "aws s3 cp manifest.json s3://jibakurei-packer-manifests/base/manifest.json"
+      ]
     }
   ]
 }
