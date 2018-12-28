@@ -74,5 +74,12 @@
         "sudo /tmp/scripts/cleanup.sh"
       ]
     }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest-{{isotime | clean_ami_name}}.json",
+      "strip_path": true
+    }
   ]
 }
