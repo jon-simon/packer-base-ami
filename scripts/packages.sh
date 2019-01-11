@@ -5,8 +5,10 @@ yum-config-manager --enable epel
 
 # Base packages
 PACKAGES="
+awslogs
 git
 initscripts
+jq
 libpcap-devel
 net-tools
 perl-DateTime
