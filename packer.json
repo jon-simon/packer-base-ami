@@ -60,19 +60,21 @@
     {
       "type": "file",
       "source": "files/awscli.conf",
-      "destination": "/etc/awslogs/awscli.conf"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "sudo systemctl stop awslogsd",
-        "sudo systemctl enable awslogsd.service"
-      ]
+      "destination": "/tmp/awscli.conf"
     },
     {
       "type": "file",
       "source": "files/awslogs.conf",
-      "destination": "/etc/awslogs/awslogs.conf"
+      "destination": "/tmp/awslogs.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mv /tmp/awscli.conf /etc/awslogs/awscli.conf",
+        "sudo mv /tmp/awslogs.conf /etc/awslogs/awslogs.conf",
+        "sudo systemctl stop awslogsd",
+        "sudo systemctl enable awslogsd.service"
+      ]
     },
     {
       "type": "ansible-local",
