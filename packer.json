@@ -88,7 +88,6 @@
     {
       "type": "shell",
       "inline": [
-        "sudo /tmp/scripts/secure_ssh.sh",
         "sudo /tmp/scripts/compliance.sh",
         "sudo /tmp/scripts/cleanup.sh"
       ]
