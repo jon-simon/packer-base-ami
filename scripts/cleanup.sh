@@ -63,3 +63,5 @@ echo "Cleaning yum database ..."
 # Cleaning yum cache
 yum -y clean all
 check_status $? "Unable to clean yum database"
+
+echo "" > /var/log/secure
