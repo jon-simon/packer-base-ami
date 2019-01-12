@@ -3,6 +3,6 @@
  - src: https://github.com/dev-sec/ansible-os-hardening.git
    name: ansible-os-hardening
 
-# # dependency ansible-os-hardening role.
-#  - src: https://github.com/dev-sec/ansible-ssh-hardening.git
-#    name: ansible-ssh-hardening
+# dependency ansible-os-hardening role.
+ - src: https://github.com/dev-sec/ansible-ssh-hardening.git
+   name: ansible-ssh-hardening
