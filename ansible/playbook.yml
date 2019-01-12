@@ -15,7 +15,6 @@
         create: yes
   roles:
     - ansible-os-hardening
-    - ansible-ssh-hardening
 
   vars:
     os_ignore_users:
