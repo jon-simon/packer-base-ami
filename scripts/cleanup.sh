@@ -31,13 +31,11 @@ ntpstats/loopstats.*
 ntpstats/peerstats.*
 runlist.log
 "
-TRUNCATELIST="
-audit/audit.log
+WIPELIST="
 cron
+dmesg
 maillog
 messages
-ntpstats/loopstats
-ntpstats/peerstats
 secure
 yum.log
 "
@@ -45,13 +43,6 @@ echo "Cleaning up logs ..."
 for fn in $REMOVELIST; do
   /bin/rm -f $fn
   check_status $? "Unable to remove ${fn}"
-done
-
-echo "Truncating logs ..."
-for fn in $TRUNCATELIST; do
-  if [ -f $fn ]; then
-  check_status $? "Unable to remove ${fn}"
-  fi
 done
 
 # clearning the packer scripts directory out of /tmp
@@ -64,4 +55,10 @@ echo "Cleaning yum database ..."
 yum -y clean all
 check_status $? "Unable to clean yum database"
 
-echo "" > /var/log/secure
+echo "Wiping logs ..."
+for fn in $TRUNCATELIST; do
+  if [ -f $fn ]; then
+  echo "" > $fn
+  check_status $? "Unable to wipe ${fn}"
+  fi
+done
